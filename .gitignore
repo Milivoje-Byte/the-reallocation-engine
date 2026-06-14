@@ -43,3 +43,11 @@ data/BLS/db_30_2_mysql/
 # macOS
 .DS_Store
 **/.DS_Store
+# >>> large files auto-ignored (>25MB) — managed by scripts/gitignore-large.sh
+/data/bls/db-30-2-text/Work Context.txt
+/data/bls/zip/db_30_2_excel.zip
+/data/sec/form-d/processed/companies-sec-2025q2-d.json
+/data/sec/form-d/processed/companies-sec-2025q3-d.json
+/data/sec/form-d/processed/companies-sec-2025q4-d.json
+/data/sec/form-d/processed/companies-sec-2026q1-d.json
+# <<< end large files

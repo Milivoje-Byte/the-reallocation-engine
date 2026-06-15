@@ -12,18 +12,18 @@ That failure has a cause, and the cause is a design error. The recipe was writte
 
 Every recipe has two customers with completely different needs.
 
-The first customer is the AI executing it. It needs the recipe to be **terse and imperative**. It needs to know, in the fewest words possible, what to read first, what commands to run in what order, what output files to inspect, what to log, and under what conditions to stop. It does not need context or rationale. Rationale is processing budget that could be spent on execution. The AI doesn't care that the scan recipe exists to enforce the verified-data contract — it cares that the first line says "Read `recipes/_shared.md`" and the second line names the next file. The executable recipe is optimized for an agent to follow exactly, tonight.
+The first customer is the AI executing it. It needs the recipe to be **complete, explicit, and unambiguous**. It needs to know — precisely, with nothing left to inference — what to read first, what commands to run in what order, what output files to inspect, what to log, and under what conditions to stop. What it does *not* need is narrative or rationale: prose explaining *why* is budget spent on something other than the task. But stripping the prose does not mean making the artifact short. Often the opposite — a serious agent contract can run to hundreds or thousands of lines of exact steps and structured JSON, because every case the agent might hit has to be specified rather than left to its judgment. Terse in prose, exhaustive in specification. The AI doesn't care that the scan recipe exists to enforce the verified-data contract — it cares that the first line says "Read `recipes/_shared.md`," that the next line names the file, and that nothing it needs is missing. The executable recipe is optimized for an agent to follow exactly, tonight.
 
-The second customer is the human maintaining it. This is future-you, reading in March, who has forgotten what the recipe does, has no memory of why certain design choices were made, and needs to understand the recipe well enough to fix it when it breaks or extend it when your search changes. The maintainer needs to know what the recipe does, what it depends on, how to run it, what it produces when it works, and what goes wrong when it doesn't. The maintainer does not need an imperative step-list dressed as prose — that is confusing to read and easy to skip. The human artifact is a card: purpose, dependencies, commands, outputs, failure modes. Optimized for comprehension rather than execution.
+The second customer is the human maintaining it. This is future-you, reading in March, who has forgotten what the recipe does, has no memory of why certain design choices were made, and needs to understand the recipe well enough to fix it when it breaks or extend it when your search changes. The human does *not* want the exhaustive specification the agent needs — handed a thousand lines of exact steps, a person skims and loses the thread. What the maintainer wants is orientation first: a high-level summary of what the recipe is and why it exists, and then the ability to drill into detail only on the question they actually have. So the human artifact is layered: a one- or two-sentence purpose and the big picture on top, then dependencies, how to run it, what it produces, and how it fails underneath — each there to expand when a specific question arises, not to be read end to end. Optimized for fast comprehension and selective depth rather than execution.
 
-The problem is that these two needs are in tension. The imperative recipe is stripped of explanation so the agent doesn't get distracted. The human card is heavy on explanation so the maintainer understands the reasoning. A document that tries to do both splits the difference: too much prose to be clean for the agent, too imperative to make sense to a reader who has forgotten the context. A recipe written to serve both customers simultaneously serves neither.
+The problem is that these two needs are in tension. The agent contract is stripped of explanation so nothing is ambiguous and nothing is left to improvisation. The human card leads with the summary and keeps the detail a layer down, so the maintainer grasps the point before deciding how deep to go. A document that tries to do both splits the difference: too much prose to be clean and exact for the agent, too much exhaustive detail up front to make sense to a reader who has forgotten the context. A recipe written to serve both customers simultaneously serves neither.
 
 So you write it twice.
 
-![Two boxes side by side — an AI-artifact box of terse, imperative attributes and a human-artifact box of fuller comprehension attributes — both resting on a single wide foundation bar labeled the verified-data contract, with arrows rising from the foundation into each box.](../images/04-two-customers-fig-01.png)
+![Two boxes side by side — an AI-artifact box that is complete and explicit (read-first order, verbatim commands, stop conditions, as long as precision requires) and a human-artifact box that leads with a summary and lets the reader drill into detail on demand — both resting on a single wide foundation bar labeled the verified-data contract, with arrows rising from the foundation into each box.](../images/04-two-customers-fig-01.png)
 *Figure 4.1 — Two customers, one contract*
 
-<!-- → [DIAGRAM: Two boxes side by side, labeled "AI Artifact (recipe)" and "Human Artifact (card)". AI box lists: terse, imperative, read-first order, commands verbatim, stop conditions. Human box lists: purpose statement, dependencies, how-to-run, what-it-produces, failure modes. Both boxes share a footer labeled "Verified-Data Contract (_shared.md)" with arrows pointing into both. Caption: "Same recipe, two documents. The contract is the one thing both artifacts must honor."] -->
+<!-- → [DIAGRAM: Two boxes side by side, labeled "AI Artifact (recipe)" and "Human Artifact (card)". AI box lists: complete, explicit, imperative, read-first order, commands verbatim, stop conditions (as long as precision requires). Human box lists: purpose statement, dependencies, how-to-run, what-it-produces, failure modes. Both boxes share a footer labeled "Verified-Data Contract (_shared.md)" with arrows pointing into both. Caption: "Same recipe, two documents. The contract is the one thing both artifacts must honor."] -->
 
 ## What each artifact contains
 
@@ -170,7 +170,7 @@ npm run ats:verify
 
 The commands are identical between the two artifacts. What differs is the frame: the recipe assumes the reader will execute immediately; the human card assumes the reader is trying to understand. The same content, arranged for two different questions — "what do I run?" versus "what is this and how does it break?"
 
-![A section-by-section matrix mapping the five recipe sections across the two artifacts — opening, core content, evidence, logging, failure — where the AI column carries terse imperative chips and the human column fuller annotated chips, and the failure row shows an empty AI cell against the heaviest chip in the human column.](../images/04-two-customers-fig-02.png)
+![A section-by-section matrix mapping the five recipe sections across the two artifacts — opening, core content, evidence, logging, failure — where the AI column carries exact, imperative chips and the human column fuller annotated chips, and the failure row shows an empty AI cell against the heaviest chip in the human column.](../images/04-two-customers-fig-02.png)
 *Figure 4.2 — Same content, inverted context: section-by-section*
 
 <!-- → [INFOGRAPHIC: Two annotated documents side by side — left labeled "AI Recipe (scan.md)" with callout arrows pointing to: read-first list, verbatim commands, stop condition, log template; right labeled "Human Card (scan — maintainer view)" with callout arrows pointing to: purpose statement, dependency list, annotated commands, failure modes numbered 1–4. Caption: "The recipe is optimized for execution. The card is optimized for comprehension. Neither does the other's job."] -->
@@ -193,7 +193,7 @@ That question — are these the right numbers? — is the subject of Chapter 5. 
 
 **Project:** Your Own Reallocation Engine
 
-**This chapter adds:** the authoring discipline your engine is maintained with — for one recipe in your repo you write both artifacts, the terse AI recipe and the human card, bound by the shared contract, so tonight's agent can run it and March's you can fix it.
+**This chapter adds:** the authoring discipline your engine is maintained with — for one recipe in your repo you write both artifacts, the complete-and-explicit AI recipe and the summary-first human card, bound by the shared contract, so tonight's agent can run it and March's you can fix it.
 
 ---
 
@@ -232,10 +232,11 @@ That question — are these the right numbers? — is the subject of Chapter 5. 
 **The Prompt:**
 
 ```
-I follow a "two customers" rule: every recipe has an AI version (terse,
-imperative, for an agent to execute) and a human card (for the maintainer who
-has forgotten the context). I will paste the AI recipe below. Write its HUMAN
-CARD only. Do not invent commands, files, or behavior that are not in the recipe
+I follow a "two customers" rule: every recipe has an AI version (complete,
+explicit, and imperative — as long as precision requires, for an agent to
+execute) and a human card (summary first, with detail to drill into, for the
+maintainer who has forgotten the context). I will paste the AI recipe below.
+Write its HUMAN CARD only. Do not invent commands, files, or behavior that are not in the recipe
 — if something is unclear, list it under "Open questions for me to resolve"
 rather than guessing.
 
@@ -378,7 +379,7 @@ After completing this validation, write a two-sentence AI Use Disclosure:
 
 ### Figure 4.1 — Two customers, one contract
 **Files:** ../images/04-two-customers-fig-01.svg · ../d3/04-two-customers-fig-01.html
-**Prompt:** Two boxes side by side on white — a terse AI artifact and a fuller human artifact — both resting on one wide foundation bar for the verified-data contract, arrows rising from the foundation into each. Keep the two boxes in neutral grays and mark the shared contract foundation in the one red accent so divergence-above-convergence-below reads at a glance.
+**Prompt:** Two boxes side by side on white — a complete-and-explicit AI artifact (read-first order, verbatim commands, stop conditions; as long as precision requires) and a summary-first human artifact (purpose on top, detail to drill into) — both resting on one wide foundation bar for the verified-data contract, arrows rising from the foundation into each. Keep the two boxes in neutral grays and mark the shared contract foundation in the one red accent so the shared-base-different-shapes reads at a glance.
 
 ### Figure 4.2 — Same content, inverted context: section-by-section
 **Files:** ../images/04-two-customers-fig-02.svg · ../d3/04-two-customers-fig-02.html

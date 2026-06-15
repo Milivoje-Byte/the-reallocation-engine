@@ -30,8 +30,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script>
     const FALLBACK_DATA = {
-      ai: { head: 'AI artifact (recipe)', attrs: ['Terse, imperative', 'Read-first order', 'Commands verbatim', 'Stop conditions'] },
-      human: { head: 'Human artifact (card)', attrs: ['Purpose statement', 'Dependencies', 'How-to-run', 'What-it-produces', 'Failure modes'] },
+      ai: { head: 'AI artifact (complete & explicit)', attrs: ['Complete, explicit, imperative', 'Read-first order', 'Commands verbatim', 'Stop conditions', '…as long as precision needs'] },
+      human: { head: 'Human artifact (summary → drill-down)', attrs: ['Purpose (the summary)', 'Dependencies', 'How-to-run', 'What-it-produces', 'Failure modes'] },
       foundation: 'Verified-data contract (_shared.md)'
     };
     async function loadData() {
@@ -48,7 +48,7 @@
         .attr('viewBox', '0 0 700 420').attr('preserveAspectRatio', 'xMidYMid meet')
         .attr('role', 'img').attr('aria-labelledby', 'chart-title chart-desc');
       svg.append('title').attr('id', 'chart-title').text('Two customers, one contract');
-      svg.append('desc').attr('id', 'chart-desc').text('A terse AI artifact and a fuller human artifact both rest on a shared verified-data contract foundation.');
+      svg.append('desc').attr('id', 'chart-desc').text('A complete-and-explicit AI artifact (as long as precision needs) and a summary-first human artifact (detail to drill into) both rest on a shared verified-data contract foundation.');
       svg.append('defs').append('marker').attr('id', 'arrow').attr('markerWidth', 8).attr('markerHeight', 6).attr('refX', 7).attr('refY', 3).attr('orient', 'auto')
         .append('polygon').attr('points', '0 0, 8 3, 0 6').attr('fill', 'var(--color-ink)');
 
@@ -78,7 +78,7 @@
       svg.append('line').attr('x1', 515).attr('y1', fY).attr('x2', 515).attr('y2', 262)
         .attr('stroke', 'var(--color-ink)').attr('stroke-width', 1.4).attr('marker-end', 'url(#arrow)').attr('aria-hidden', 'true');
 
-      svg.append('text').attr('class', 'attr-text').attr('x', 24).attr('y', 404).text('Divergence above, convergence below: two optimized documents, one shared constraint.');
+      svg.append('text').attr('class', 'attr-text').attr('x', 24).attr('y', 404).text('Two optimizations, one shared constraint. AI: complete and explicit. Human: summary first, detail on demand.');
     }
 
     loadData().then(data => { d = data; draw(); });

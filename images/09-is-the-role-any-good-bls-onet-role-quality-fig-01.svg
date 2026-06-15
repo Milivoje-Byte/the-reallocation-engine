@@ -44,12 +44,12 @@
 <line x1="316" y1="188" x2="338" y2="188" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow)"/>
 <!-- confirmed up-right -->
 <path d="M 484 178 L 504 160 L 518 152" fill="none" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow)"/>
-<text x="500" y="138" text-anchor="middle" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454">confirmed</text>
+<text x="476" y="138" text-anchor="middle" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454">confirmed</text>
 <!-- row -> read features -->
 <line x1="590" y1="176" x2="590" y2="260" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow)"/>
 
 <!-- rejected loop back to propose -->
-<text x="412" y="262" text-anchor="middle" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454">rejected</text>
+<text x="422" y="256" text-anchor="start" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454">rejected</text>
 <path d="M 412 236 L 412 300 L 256 300 L 256 218" fill="none" stroke="#C8102E" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
 <text x="334" y="316" text-anchor="middle" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454">re-propose a new code</text>
 

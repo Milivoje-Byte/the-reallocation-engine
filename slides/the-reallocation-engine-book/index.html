@@ -1,7 +1,96 @@
 <!DOCTYPE html>
 <!--
-  Brutalist Slides — deck runtime/template.
-  Fill <main id="deck">
+  Brutalist Slides deck runtime/template.
+  Fill the #deck element with one slide section per slide. Each slide section has
+  data-type, an h1.headline (assertion, 12 words or fewer), a div.body holding
+  exactly ONE visual (inline SVG or D3 figure), and an aside.notes (speaker script;
+  a Background heading is allowed). Add data-mode=study on the body element to render
+  notes inline and enable reveals.
+  Keys: arrow/Space next, arrow/PgUp back, Home/End jump, f fullscreen, s presenter,
+  o overview, ? help. Colors come ONLY from the --color-* tokens (DESIGN.md); no hardcoded hex.
+  (NOTE for generators: anchor slide insertion on the real element via the regex
+  <body ...> followed by the deck main element, NOT a literal tag in this comment.)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Reallocation Engine — book deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&family=Inter:wght@400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --color-white:#FFFFFF; --color-ink:#2a1a0e; --color-red:#C8102E;
+    --color-secondary:#545454; --color-border:#D4D4D4; --color-ochre:#C8860E;
+    --serif:'EB Garamond',Georgia,serif;
+    --sans:'Inter',-apple-system,'Helvetica Neue',sans-serif;
+    --mono:'JetBrains Mono','Courier New',monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --color-white:#111111; --color-ink:#F0EBE3; --color-red:#E8243A;
+           --color-secondary:#A0978C; --color-border:#2E2E2E; --color-ochre:#D49A30; }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--color-ink);color:var(--color-ink);font-family:var(--sans);overflow:hidden}
+  /* deck = one slide visible at a time, 16:9, centered */
+  #deck{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  .slide{
+    position:absolute;width:min(100vw,177.78vh);height:min(56.25vw,100vh);
+    background:var(--color-white);color:var(--color-ink);
+    padding:5% 6%;display:none;flex-direction:column;gap:2.5vh;
+    container-type:inline-size;
+  }
+  .slide.current{display:flex}
+  .headline{font-family:var(--serif);font-weight:400;font-size:clamp(22px,4.6cqi,52px);line-height:1.1}
+  .slide[data-type="ref"] .headline,.slide[data-type="synthesis"] .headline{color:var(--color-ink)}
+  .body{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+  .body svg, .body figure, .body img{max-width:100%;max-height:100%;object-fit:contain}
+  .body .d3fig{width:100%;height:100%}
+  .caption{font-family:var(--sans);font-size:clamp(11px,1.5cqi,15px);color:var(--color-secondary);text-align:center;margin-top:1.5cqi}
+  .eyebrow{font-family:var(--sans);font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+           font-size:clamp(10px,1.3cqi,14px);color:var(--color-secondary)}
+  .accent{color:var(--color-red)}
+  /* speaker notes: hidden in live; shown in presenter view & study mode */
+  .notes{display:none;font-family:var(--sans);font-size:clamp(12px,1.6cqi,16px);
+         line-height:1.5;color:var(--color-secondary);border-top:1px solid var(--color-border);padding-top:1.5cqi}
+  .notes h2{font-size:1em;color:var(--color-ink);margin-top:.6em}
+  /* chrome */
+  #bar{position:fixed;left:0;bottom:0;height:4px;background:var(--color-red);width:0;z-index:30;transition:width .2s}
+  #counter{position:fixed;right:14px;bottom:12px;font-family:var(--mono);font-size:13px;color:var(--color-secondary);z-index:30}
+  #help{position:fixed;inset:0;background:rgba(0,0,0,.82);color:#fff;display:none;align-items:center;justify-content:center;z-index:50}
+  #help div{font-family:var(--mono);font-size:15px;line-height:2}
+  /* presenter view */
+  body.presenter #deck{justify-content:flex-start;padding:3vh 2vw}
+  body.presenter .slide{position:static;display:none;width:64vw;height:auto;aspect-ratio:16/9}
+  body.presenter .slide.current{display:flex}
+  body.presenter .notes{display:block}
+  body.presenter #next{display:block}
+  #next{display:none;position:fixed;right:2vw;top:3vh;width:30vw;z-index:20}
+  #next .mini{border:1px solid var(--color-border);background:var(--color-white);aspect-ratio:16/9;padding:3%;overflow:hidden;transform-origin:top left}
+  #timer{position:fixed;right:2vw;bottom:3vh;font-family:var(--mono);font-size:28px;color:var(--color-secondary);z-index:30}
+  /* overview */
+  body.overview #deck{position:static;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:24px;height:100%;overflow:auto;align-content:start}
+  body.overview .slide{position:static;display:flex;width:100%;height:auto;aspect-ratio:16/9;padding:4%;cursor:pointer;outline:2px solid transparent}
+  body.overview .slide.current{outline:2px solid var(--color-red)}
+  body.overview .headline{font-size:13px}
+  body.overview .notes,body.overview .body svg text{display:none}
+  /* study mode: scrollable, notes inline */
+  body.study{overflow:auto;background:var(--color-white)}
+  body.study #deck{position:static;display:block;padding:0}
+  body.study .slide{position:static;display:flex !important;width:min(900px,92vw);margin:0 auto 32px;height:auto;
+                    aspect-ratio:auto;min-height:60vh;border-bottom:1px solid var(--color-border)}
+  body.study .notes{display:block}
+  body.study #counter,body.study #bar,body.study #timer{display:none}
+  .reveal{cursor:pointer}
+  .reveal .answer{display:none}
+  .reveal.open .answer{display:block}
+  .reveal>summary{list-style:none;color:var(--color-red);font-weight:600}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main id="deck">
   <section class="slide" data-type="ref">
     <div class="eyebrow">Humanitarians AI · book deck</div>
     <h1 class="headline">The Reallocation Engine</h1>
@@ -12,110 +101,104 @@
   <section class="slide" data-type="concept">
     <h1 class="headline">AI made execution cheap. Judgment is now the scarce resource.</h1>
     <div class="body"><div class="d3fig" data-type="bars" data-d='{"unit": "", "max": 100, "items": [{"k": "execution (then)", "v": 80}, {"k": "execution (now)", "v": 10}, {"k": "judgment", "v": 90, "accent": true}]}'></div></div>
-    <div class="caption">The engine reallocates effort toward the judgment only you can supply.</div><aside class="notes">One general claim aimed at one concrete problem: a student on an F-1 clock cannot spend judgment evenly.</aside>
+    <div class="caption">The engine reallocates effort toward the judgment only you can supply.</div><aside class="notes">A student on an F-1 clock cannot spend judgment evenly.</aside>
   </section>
   <section class="slide" data-type="ref">
     <h1 class="headline">Three movements, one decision.</h1>
     <div class="body"><div class="d3fig" data-type="flow" data-d='{"steps": ["Core method (1-5)", "Evidence (6-13)", "Operate (14-16)"], "accentIndex": 2}'></div></div>
-    <div class="caption">Fluency to verified evidence to a sourced Apply / Consider / Skip.</div><aside class="notes">Chapters 1-5 install the judgment frame; 6-13 build evidence; 14-16 operate and run.</aside>
+    <div class="caption">Fluency to verified evidence to a sourced Apply / Consider / Skip.</div><aside class="notes">1-5 install the judgment frame; 6-13 build evidence; 14-16 operate and run.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">The core method · Chapter 1</div><h1 class="headline">Fluency is not correctness — and the check is yours.</h1>
     <div class="body"><div class="d3fig" data-type="bars" data-d='{"unit": "%", "max": 100, "items": [{"k": "Hand-coded", "v": 67}, {"k": "AI + interrogation", "v": 65, "accent": true}, {"k": "AI + delegation", "v": 38}]}'></div></div>
-    <div class="caption">The variable is checking, not typing.</div><aside class="notes">The Anthropic RCT: interrogation matches hand-coding; delegation collapses. The book defends the check.</aside>
+    <div class="caption">The variable is checking, not typing.</div><aside class="notes">Anthropic RCT: interrogation matches hand-coding; delegation collapses.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">The core method · Chapter 2</div><h1 class="headline">Spend scarce judgment where it changes the decision.</h1>
     <div class="body"><div class="d3fig" data-type="stack" data-d='{"tiers": [{"label": "Execution", "sub": "cheap, automatable"}, {"label": "Reallocate effort", "sub": "the move"}, {"label": "Judgment", "sub": "scarce, decisive"}], "accentIndex": 2}'></div></div>
-    <div class="caption">Reallocate from cheap execution to scarce judgment.</div><aside class="notes">Move limited attention away from polished cold applications toward the few roles a record says can matter.</aside>
+    <div class="caption">Reallocate from cheap execution to scarce judgment.</div><aside class="notes">Move attention toward roles a record says can matter.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">The core method · Chapter 3</div><h1 class="headline">Every number traces to a record, or it is labeled a guess.</h1>
     <div class="body"><div class="d3fig" data-type="flow" data-d='{"steps": ["record", "run script", "read audit", "use it"], "accentIndex": 3}'></div></div>
-    <div class="caption">The verified-data contract: provenance over polish.</div><aside class="notes">Run the script and read the audit before you prompt. No record behind a number means it is decoration, and it is labeled as such.</aside>
+    <div class="caption">The verified-data contract: provenance over polish.</div><aside class="notes">Run the script and read the audit before you prompt.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">The core method · Chapter 4</div><h1 class="headline">Write each recipe twice: complete for the agent, summary for you.</h1>
     <div class="body"><div class="d3fig" data-type="twocol" data-d='{"left": {"title": "AI artifact", "items": ["complete & explicit", "read-first order", "stop conditions"]}, "right": {"title": "Human artifact", "items": ["summary first", "drill-down on demand", "failure modes"]}, "divider": "verified-data contract"}'></div></div>
-    <div class="caption">Two customers, one shared contract.</div><aside class="notes">The agent needs precision; the human needs orientation. One source, two artifacts, both honoring the contract.</aside>
+    <div class="caption">Two customers, one shared contract.</div><aside class="notes">Agent needs precision; human needs orientation. One source, two artifacts.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">The core method · Chapter 5</div><h1 class="headline">Real data is not enough — ask if it measures the right thing.</h1>
     <div class="body"><div class="d3fig" data-type="stack" data-d='{"tiers": [{"label": "Numbers trace to records", "sub": "the floor"}, {"label": "Are the right things measured?", "sub": "the working layer"}, {"label": "Trustworthy inference", "sub": "provisional"}], "accentIndex": 1}'></div></div>
-    <div class="caption">The three-tier trust stack: build upward.</div><aside class="notes">Records are the floor. Above sits the working question, where coverage gaps and base-rate mismatch live.</aside>
+    <div class="caption">The three-tier trust stack: build upward.</div><aside class="notes">Records are the floor; above sits the working question.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">The evidence components · Chapter 6</div><h1 class="headline">Follow the funding: recent raises beat big names.</h1>
     <div class="body"><div class="d3fig" data-type="flow" data-d='{"steps": ["SEC Form D", "rank by recency + size", "funded shortlist"], "accentIndex": 2}'></div></div>
-    <div class="caption">Form D surfaces who just raised money.</div><aside class="notes">Recently funded companies are hiring. The recipe ranks leads and flags the bigger-is-not-better cases.</aside>
+    <div class="caption">Form D surfaces who just raised money.</div><aside class="notes">Recently funded companies are hiring.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">The evidence components · Chapter 7</div><h1 class="headline">Score who actually sponsors, not who is famous.</h1>
     <div class="body"><div class="d3fig" data-type="bars" data-d='{"unit": "", "max": 100, "items": [{"k": "famous, non-sponsor", "v": 20}, {"k": "proven sponsor", "v": 85, "accent": true}]}'></div></div>
-    <div class="caption">Sponsorship history, not brand recognition.</div><aside class="notes">A famous employer is not a sponsoring employer. The scorer separates a true record from a name-match artifact.</aside>
+    <div class="caption">Sponsorship history, not brand recognition.</div><aside class="notes">A famous employer is not a sponsoring employer.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">The evidence components · Chapter 8</div><h1 class="headline">A posting is not a job until it is proven live.</h1>
     <div class="body"><div class="d3fig" data-type="flow" data-d='{"steps": ["ATS detected", "liveness check", "live posting"], "accentIndex": 2}'></div></div>
-    <div class="caption">Detection is not liveness.</div><aside class="notes">ATS present means the provider is there; liveness means the role is open today. Different facts, kept separate.</aside>
+    <div class="caption">Detection is not liveness.</div><aside class="notes">ATS present is not the same as open today.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">The evidence components · Chapter 9</div><h1 class="headline">Resolve the title to an occupation before you trust the pay.</h1>
     <div class="body"><div class="d3fig" data-type="flow" data-d='{"steps": ["raw title", "model proposes", "alternate-title check", "O*NET + OEWS"], "accentIndex": 3}'></div></div>
-    <div class="caption">Proposing is not confirming.</div><aside class="notes">A messy title becomes a labor-market fact only after a check confirms the proposed code.</aside>
+    <div class="caption">Proposing is not confirming.</div><aside class="notes">A messy title becomes a fact only after a check confirms the code.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">The evidence components · Chapter 10</div><h1 class="headline">The 90-day clock is a gate, not a vote.</h1>
     <div class="body"><div class="d3fig" data-type="gatebar" data-d='{"used": 58, "soft": 80, "hard": 90, "max": 90, "softLabel": "working limit (80)", "hardLabel": "authorization end (90)"}'></div></div>
-    <div class="caption">Every calendar day counts.</div><aside class="notes">An impossible timeline zeros a role. The engine budgets to eighty days — a deliberate margin against a cliff.</aside>
+    <div class="caption">Every calendar day counts.</div><aside class="notes">The engine budgets to eighty days — a margin against a cliff.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">The evidence components · Chapter 11</div><h1 class="headline">Combine the evidence into one defensible Apply / Consider / Skip.</h1>
     <div class="body"><div class="d3fig" data-type="quadrant" data-d='{"xlab": "Sponsorship probability (low to high)", "ylab": "Fit score (low to high)", "regions": {"tl": "Consider", "tr": "Apply", "bl": "Skip", "br": "Consider"}, "points": [{"x": 0.2, "y": 0.75, "label": "non-sponsor"}, {"x": 0.82, "y": 0.75, "label": "sponsor", "accent": true}]}'></div></div>
-    <div class="caption">Equal fit, different sponsorship, opposite regions.</div><aside class="notes">Sponsorship, fit, liveness, and timeline compose into one sourced recommendation you can trace.</aside>
+    <div class="caption">Equal fit, different sponsorship, opposite regions.</div><aside class="notes">Sponsorship, fit, liveness, timeline compose into one sourced recommendation.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">The evidence components · Chapter 12</div><h1 class="headline">Strategic framing is permitted; misrepresentation is not.</h1>
     <div class="body"><div class="d3fig" data-type="twocol" data-d='{"left": {"title": "Permitted", "items": ["lead with a true fact", "order it strategically", "calibrate vocabulary"]}, "right": {"title": "Forbidden", "items": ["claim a status not held", "invent metrics", "deny when asked"]}, "divider": "the line is absolute"}'></div></div>
-    <div class="caption">The bright line, not a gradient.</div><aside class="notes">The tool lives entirely on one side of the line. Never claim a status you do not hold.</aside>
+    <div class="caption">The bright line, not a gradient.</div><aside class="notes">The tool lives entirely on one side of the line.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">The evidence components · Chapter 13</div><h1 class="headline">Write for the filter and the human who reads after it.</h1>
     <div class="body"><div class="d3fig" data-type="twocol" data-d='{"left": {"title": "Machine (ATS)", "items": ["parses fields", "extracts skills", "ranks match"]}, "right": {"title": "Human", "items": ["reads after the filter", "judges fit", "decides"]}, "divider": "one resume, two readers"}'></div></div>
-    <div class="caption">Survive the parser without becoming keyword soup.</div><aside class="notes">The recipe checks both readers: the filter and the person after it.</aside>
+    <div class="caption">Survive the parser without becoming keyword soup.</div><aside class="notes">The recipe checks both readers.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">Operating the engine · Chapter 14</div><h1 class="headline">Run the recipes in order; every stage leaves provenance.</h1>
     <div class="body"><div class="d3fig" data-type="flow" data-d='{"steps": ["scan", "pipeline", "oferta", "verify", "RUN_LOG"], "accentIndex": 3}'></div></div>
-    <div class="caption">The chain is only as trustworthy as its weakest link.</div><aside class="notes">Each stage records what it found so the recommendation can be audited end to end.</aside>
+    <div class="caption">The chain is only as trustworthy as its weakest link.</div><aside class="notes">Each stage records what it found, end to end.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">Operating the engine · Chapter 15</div><h1 class="headline">A low skip rate means the filter is failing.</h1>
     <div class="body"><div class="d3fig" data-type="gauge" data-d='{"value": 57, "target": 50, "zones": [{"from": 0, "to": 40, "label": "too loose"}, {"from": 40, "to": 50, "label": "borderline"}, {"from": 50, "to": 85, "label": "healthy", "accent": true}, {"from": 85, "to": 100, "label": "starved"}]}'></div></div>
-    <div class="caption">Skip is a successful outcome.</div><aside class="notes">A healthy run skips at least half the roles. Too low, and the engine has stopped talking you out of bad applications.</aside>
+    <div class="caption">Skip is a successful outcome.</div><aside class="notes">A healthy run skips at least half the roles.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">Operating the engine · Chapter 16</div><h1 class="headline">Assemble it, then make one honest, gated run.</h1>
     <div class="body"><div class="d3fig" data-type="flow" data-d='{"steps": ["assemble", "one gated run", "a decision you can defend"], "accentIndex": 2}'></div></div>
-    <div class="caption">The build and the honest run.</div><aside class="notes">The point was never an impressive machine — it is a decision you can stand behind.</aside>
+    <div class="caption">The build and the honest run.</div><aside class="notes">The point was a decision you can stand behind.</aside>
   </section>
   <section class="slide" data-type="synthesis">
     <h1 class="headline">Run the script, read the audit, then decide.</h1>
     <div class="body"><div class="d3fig" data-type="flow" data-d='{"steps": ["machine: records", "audit: provenance", "human: the decision"], "accentIndex": 2}'></div></div>
-    <div class="caption">Machines verify conformance; humans verify adequacy.</div><aside class="notes">The one sentence to carry out: a confident output is not a correct one.</aside>
+    <div class="caption">Machines verify conformance; humans verify adequacy.</div><aside class="notes">A confident output is not a correct one.</aside>
   </section>
   <section class="slide" data-type="concept">
     <div class="eyebrow">Start in ten minutes</div>
     <h1 class="headline">Read the map, run it, trace one decision.</h1>
-    <div class="body"><div style="font-family:var(--mono);font-size:clamp(13px,2cqi,20px);line-height:2;color:var(--color-ink)">
-      1 &nbsp; read <span class="accent">_MANIFEST.md</span> · SNICKERDOODLE.md · DOMAIN.md<br>
-      2 &nbsp; <span class="accent">npm run doctor</span><br>
-      3 &nbsp; <span class="accent">npm run score</span> data/examples/ch11-roles.json<br>
-      4 &nbsp; read the audit — trace one row<br>
-      5 &nbsp; open <span class="accent">Chapter 1 — The Fluency Trap</span>
-    </div></div>
+    <div class="body"><div style="font-family:var(--mono);font-size:clamp(13px,2cqi,20px);line-height:2;color:var(--color-ink)">1 &nbsp; read <span class="accent">_MANIFEST.md</span><br>2 &nbsp; <span class="accent">npm run doctor</span><br>3 &nbsp; <span class="accent">npm run score</span> data/examples/ch11-roles.json<br>4 &nbsp; read the audit — trace one row<br>5 &nbsp; open <span class="accent">Chapter 1</span></div></div>
     <div class="caption">Watch the engine make one decision, and trace it.</div>
-    <aside class="notes">Send them to the repo. Ask what would have to be true for a decision to be trusted. Then run the script and begin.</aside>
+    <aside class="notes">Send them to the repo. Then run the script and begin.</aside>
   </section>
   </main>
 
@@ -170,7 +253,6 @@
 
   // study mode shows everything; live/presenter start at slide i
   if(!document.body.classList.contains('study')) show(i);
-
 
   // ===== animated D3 figure library (brutalist tokens, enter transitions) =====
   function C(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
@@ -290,7 +372,6 @@
   };
   function drawFig(el){const t=el.dataset.type, d=JSON.parse(el.dataset.d); if(FIG[t]) FIG[t](el,d);}
   document.querySelectorAll('.d3fig').forEach(el=>{drawFig(el); new ResizeObserver(()=>drawFig(el)).observe(el);});
-
 </script>
 </body>
 </html>

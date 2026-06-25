@@ -1,0 +1,328 @@
+{
+  "attested": true,
+  "attested_date": "2026-06-25",
+  "attestation_note": "Three errors corrected: (1) Computational skills (R/Python, STATA/SPSS) were extracted as uniform 'expert' from a 5-dot CV rating that did not actually distinguish proficiency levels; corrected to proficient/expert/working_knowledge per tool. (2) MathWorks Lab role description used solo-leadership language ('led,' 'spearheaded') that overstated the candidate's actual team-based/co-led contribution; reworded to reflect shared ownership. (3) German language proficiency was extracted as 'expert' from the same uniform dot-rating; corrected to working_knowledge. Two other flagged items (Faculty Director as separate role; Skopje Teaching Excellence Award location) were checked and confirmed accurate as originally written — not every flag was an error.",
+
+  "candidate": {
+    "name": "Milivoje Davidovic",
+    "email": "m.davidovic@northeastern.edu",
+    "location": "Boston, MA",
+    "summary": "Quantitative and financial economist with dual Ph.D. training, 15+ years of academic experience, and expertise in AI/ML, econometrics, computational finance, systemic risk, and financial stability."
+  },
+
+  "employment": [
+    {
+      "id": "emp_01",
+      "title": "Assistant Teaching Professor",
+      "organization": "Northeastern University, College of Science & School of Business (Joint Appointment)",
+      "location": "Boston, MA",
+      "start_date": "2022-08",
+      "end_date": null,
+      "current": true,
+      "details": [
+        "Courses: Financial Mathematics & Markets, Quantitative Portfolio Management, Computational Methods in Finance, Advanced Topics in Finance, Investments."
+      ]
+    },
+    {
+      "id": "emp_02",
+      "title": "Faculty Director, MathWorks (MATLAB) Lab for FinTech and Quantitative Business Analysis",
+      "organization": "Northeastern University, D'Amore-McKim School of Business",
+      "location": "Boston, MA",
+      "start_date": "2024-09",
+      "end_date": null,
+      "current": true,
+      "details": [
+        "Delivered and organized computational seminars, webinars, and research talks using MATLAB.",
+        "Co-led strategic computational initiatives as part of a team; contributed to integration of AI into computational practice; provided advisory consulting to the MATLAB engineering team."
+      ],
+      "attestation_note": "Corrected 2026-06-25: original draft said 'led' and 'spearheaded' (solo framing); candidate confirmed this was team-based/co-led work, not individually driven."
+    },
+    {
+      "id": "emp_03",
+      "title": "Economics Instructor",
+      "organization": "Tennessee Tech University, Department of Economics, Finance & Marketing",
+      "location": "Cookeville, TN",
+      "start_date": "2021-08",
+      "end_date": "2022-05",
+      "current": false,
+      "details": [
+        "Courses: Principles of Macroeconomics, Intermediate Macroeconomics, Money and Banking."
+      ]
+    },
+    {
+      "id": "emp_04",
+      "title": "Visiting Assistant Professor",
+      "organization": "Valparaiso University, Department of Economics",
+      "location": "Valparaiso, IN",
+      "start_date": "2021-02",
+      "end_date": "2021-05",
+      "current": false,
+      "details": [
+        "Courses: Principles of Macroeconomics, Financial Markets (undergraduate and graduate)."
+      ]
+    },
+    {
+      "id": "emp_05",
+      "title": "Instructor and Graduate Teaching Assistant",
+      "organization": "Northern Illinois University, Department of Economics",
+      "location": "DeKalb, IL",
+      "start_date": "2016-08",
+      "end_date": "2021-05",
+      "current": false,
+      "details": [
+        "Instructor: Principles of Macroeconomics, Econometrics Using Excel & R.",
+        "GTA: Principles of Macroeconomics, Econometrics, Sports Economics."
+      ]
+    },
+    {
+      "id": "emp_06",
+      "title": "Instructor",
+      "organization": "Johns Hopkins University, Center for Talented Youth",
+      "location": "Baltimore, MD",
+      "start_date": "2018-07",
+      "end_date": "2018-08",
+      "current": false,
+      "details": [
+        "Course: Macroeconomics and the Global Economy."
+      ]
+    },
+    {
+      "id": "emp_07",
+      "title": "Financial Analyst Intern",
+      "organization": "J.P. Morgan Chase",
+      "location": "London, UK",
+      "start_date": "2016-01",
+      "end_date": "2016-05",
+      "current": false,
+      "details": [
+        "Structured finance, algorithmic trading, and large-scale quantitative modeling (Python, R, SQL)."
+      ]
+    },
+    {
+      "id": "emp_08",
+      "title": "PhD Student and Graduate Teaching Assistant",
+      "organization": "University of Novi Sad, Department of Finance and Banking",
+      "location": "Subotica, Serbia",
+      "start_date": "2009-10",
+      "end_date": "2014-09",
+      "current": false,
+      "details": [
+        "Instructor: Banking, Finance.",
+        "GTA: Banking, Monetary and Fiscal Policy, Commercial and Investment Banking.",
+        "Research Assistant: Re-industrialization of Serbia; Agro-industrial Policy in Vojvodina."
+      ]
+    }
+  ],
+
+  "education": [
+    {
+      "id": "edu_01",
+      "degree": "Ph.D., Economics",
+      "focus": "Quantitative Economics & Econometrics",
+      "institution": "Northern Illinois University",
+      "start_date": "2016-08",
+      "end_date": "2021-05",
+      "status": "completed",
+      "dissertation": "Three Essays Applied Econometrics",
+      "advisors": ["Prof. Jeremy Groves", "Prof. Carl Campbell"]
+    },
+    {
+      "id": "edu_02",
+      "degree": "M.S., Applied Mathematics",
+      "focus": "Data Science & Machine Learning",
+      "institution": "Northeastern University",
+      "start_date": "2025-05",
+      "end_date": "2026-12",
+      "status": "in_progress_part_time",
+      "advisor": "Prof. He Wang",
+      "note": "User-confirmed: currently in progress, part-time, while working full-time as Assistant Teaching Professor."
+    },
+    {
+      "id": "edu_03",
+      "degree": "M.S., Statistics",
+      "focus": "Statistical Computing & Bayesian Statistics",
+      "institution": "Northern Illinois University",
+      "start_date": "2018-08",
+      "end_date": "2021-05",
+      "status": "completed",
+      "advisors": ["Prof. Alan Polansky", "Prof. Duchwan Ryu"]
+    },
+    {
+      "id": "edu_04",
+      "degree": "M.A., Economics",
+      "focus": "Quantitative Economics & Financial Economics",
+      "institution": "Northern Illinois University",
+      "start_date": "2016-08",
+      "end_date": "2018-05",
+      "status": "completed",
+      "advisor": "Prof. Jeremy Groves"
+    },
+    {
+      "id": "edu_05",
+      "degree": "Ph.D., Finance",
+      "focus": "Banking, Finance and Financial Markets",
+      "institution": "University of Novi Sad, Serbia",
+      "start_date": "2009-01",
+      "end_date": "2015-06",
+      "status": "completed",
+      "note": "User-confirmed: officially started 2009, defended 2015. Overlaps with M.S. Finance and Banking (ends 2009-01) and PhD-Student/GTA role (2009-10 to 2014-09) — confirmed as accurate, not a data error."
+    },
+    {
+      "id": "edu_06",
+      "degree": "M.S., Finance and Banking",
+      "focus": "Banking and Financial Markets",
+      "institution": "University of Novi Sad, Serbia",
+      "start_date": "2006-01",
+      "end_date": "2009-01",
+      "status": "completed"
+    },
+    {
+      "id": "edu_07",
+      "degree": "B.S., Economics",
+      "focus": "Financial Management and Accounting",
+      "institution": "University of Novi Sad, Serbia",
+      "start_date": "2002-10",
+      "end_date": "2006-01",
+      "status": "completed"
+    }
+  ],
+
+  "publications": {
+    "refereed_journal_articles": [
+      {
+        "id": "pub_01",
+        "citation": "Davidovic, M., McCleary, J.E. (2025). News Sentiment and Stock Market Dynamics: A Machine Learning Investigation. Journal of Risk and Financial Management, 18(412)."
+      },
+      {
+        "id": "pub_02",
+        "citation": "Davidovic, M. (2021). From Pandemic to Financial Contagion: High-Frequency Risk Metrics and Bayesian Volatility Analysis. Finance Research Letters, January 2021."
+      },
+      {
+        "id": "pub_03",
+        "citation": "Fidanoski, F., Simeonovski, K., Kaftandzieva, T., Ranga, M., Dana, L-P., Davidovic, M., Ziolo, M., & Sergi, B. (2022). The Triple Helix in Developed Countries: When Knowledge Meets Innovation? Heliyon, 8(8), e10168."
+      },
+      {
+        "id": "pub_04",
+        "citation": "Uzelac, O., Davidovic, M., Dukic-Marjanovic, M. (2020). Legal Framework, Political Environment and Economic Freedom in Central and Eastern Europe: Do They Matter for Economic Development? Post-Communist Economies, 32(6): 697-725."
+      },
+      {
+        "id": "pub_05",
+        "citation": "Davidovic, M., Uzelac, O., Zelenovic, V. (2019). Efficiency Dynamics of the Croatian Banking Industry. Economic Research - Ekonomska Istrazivanja, 31(1): 33-49."
+      },
+      {
+        "id": "pub_06",
+        "citation": "Fidanoski, F., Choudhry, M., Davidovic, M., Sergi, S.B. (2018). What Does Affect Profitability of Banks in Croatia? Competitiveness Review, 28(4): 338-367."
+      },
+      {
+        "id": "pub_07",
+        "citation": "Milenkovic, I., Davidovic, M. (2013). Determinants of Currency Substitution/Dollarization - The Case of the Republic of Serbia. Journal of Central Banking Theory and Practice, 2(1): 139-155."
+      },
+      {
+        "id": "pub_08",
+        "citation": "Davidovic, M., Milenkovic, I., Furtula, S. (2013). Currency Substitution and Bank Profitability: Panel Evidence from Serbia. Actual Problems of Economics, 12(150): 381-392."
+      }
+    ],
+    "working_papers": [
+      {
+        "id": "wp_01",
+        "title": "When Do Oil Disturbances and Geopolitical Risk Become Inflationary?",
+        "coauthors": ["Ngwaba, C.A."],
+        "status": "Under review, Economic Analysis and Policy"
+      },
+      {
+        "id": "wp_02",
+        "title": "Geopolitical Risk, Market Fragility, and State-Dependent Pricing in Energy Markets",
+        "coauthors": ["Ngwaba, C.A.", "Levkoff, S.B."],
+        "status": "Submitted, Finance Research Letters"
+      },
+      {
+        "id": "wp_03",
+        "title": "Competition, Regulation, and Efficiency: Evidence from the U.S. Commercial Banking Industry",
+        "coauthors": ["Levkoff, S.B."],
+        "status": "Submitted, Journal of Applied Econometrics"
+      },
+      {
+        "id": "wp_04",
+        "title": "Breaking the Fourier Barrier: Riccati Systems and Hermite-Edgeworth Expansions for Heston Model",
+        "coauthors": [],
+        "status": "Working paper, in progress"
+      },
+      {
+        "id": "wp_05",
+        "title": "Event-Driven Structural Breaks in Stock Market Psychology",
+        "coauthors": [],
+        "status": "Working paper, in progress"
+      },
+      {
+        "id": "wp_06",
+        "title": "Dependence-Induced Model Risk in Single-Name CDS Valuation",
+        "coauthors": [],
+        "status": "Working paper, in progress"
+      },
+      {
+        "id": "wp_07",
+        "title": "Robust Economic and Institutional Determinants of Happiness: High-Dimensional Bayesian Inference",
+        "coauthors": [],
+        "status": "Working paper, in progress"
+      }
+    ]
+  },
+
+  "grants": [
+    {
+      "id": "grant_01",
+      "role": "Principal Investigator",
+      "title": "Cross-Market Financial Integration and Systemic Risk: Copula Dependence and Spectral Density Analysis",
+      "funder": "MATLAB (MathWorks) Research Micro-Grant",
+      "period": "2023-2025"
+    }
+  ],
+
+  "awards": [
+    { "id": "award_01", "title": "Outstanding Ph.D. Student Scholar Award", "organization": "Northern Illinois University", "year": 2021 },
+    { "id": "award_02", "title": "Outstanding Ph.D. Student Award", "organization": "Northern Illinois University", "year": 2020 },
+    { "id": "award_03", "title": "Outstanding Ph.D. Student Award", "organization": "Department of Economics, NIU", "year": 2019 },
+    { "id": "award_04", "title": "Invisible Hand Award", "organization": "Economics Student Association, NIU", "year": 2018 },
+    { "id": "award_05", "title": "Teaching Excellence Award", "organization": "Ss. Cyril and Methodius University of Skopje", "year": 2015 },
+    { "id": "award_06", "title": "Academic Excellence Award", "organization": "University of Novi Sad", "years": [2003, 2004, 2005] },
+    { "id": "award_07", "title": "Young Talents Scholarship", "organization": "Ministry of Education and Science, Serbia", "years": [2004, 2005, 2006] }
+  ],
+
+  "skills": {
+    "computational": [
+      { "name": "R", "self_rated_level": "proficient" },
+      { "name": "Python", "self_rated_level": "proficient" },
+      { "name": "STATA", "self_rated_level": "proficient" },
+      { "name": "SPSS", "self_rated_level": "proficient" },
+      { "name": "MATLAB", "self_rated_level": "expert" },
+      { "name": "SAS", "self_rated_level": "working_knowledge" },
+      { "name": "Julia", "self_rated_level": "working_knowledge" }
+    ],
+    "languages": [
+      { "name": "English", "self_rated_level": "expert_per_cv_marks" },
+      { "name": "Serbian", "self_rated_level": "expert_per_cv_marks" },
+      { "name": "German", "self_rated_level": "working_knowledge" }
+    ],
+    "note": "Computational skills corrected during attestation pass (2026-06-25): the CV's uniform 5-dot rating overstated several tools. Real levels per candidate: R/Python and STATA/SPSS = proficient (not expert), MATLAB = expert, SAS and Julia = working knowledge only. Languages also corrected: German downgraded from 'expert_per_cv_marks' to working_knowledge — same uniform-rating overstatement pattern as the computational skills. English and Serbian confirmed accurate as native/expert."
+  },
+
+  "service_and_professional_development": {
+    "institutional_service": [
+      "Undergraduate Finance Students Award Committee, Member, 2023-Present (Northeastern)",
+      "Financial Management Association (FMA) National Honor Society, Student Advisor, 2024-Present (Northeastern)",
+      "Graduate Course Proposal - Artificial Intelligence in Finance, Author/Proposer, 2025 (Northeastern)",
+      "Faculty Director, MathWorks Lab for FinTech & Quantitative Business Analysis, 2024-Present",
+      "Faculty Lead, Level 2: Leveraging AI for Business, 2024-2025",
+      "MathWorks Weeks at Northeastern, Organizer/Faculty Lead, 2024-2025",
+      "AI in Teaching Advisory Group, Member, 2024-2025"
+    ],
+    "service_to_profession": [
+      "Guest Editor (Special Issue), Journal of Risk and Financial Management, 2025-Present",
+      "Manuscript Referee, Applied Economics, 2026-Present",
+      "Manuscript Referee, Journal of Economics and Finance, 2026-Present",
+      "Manuscript Referee, Finance Research Letters, 2024-Present",
+      "Textbook Referee, Cambridge University Press, 2024-2025",
+      "Student Mentorship & Recommendation Letters, 2022-2026"
+    ]
+  }
+}

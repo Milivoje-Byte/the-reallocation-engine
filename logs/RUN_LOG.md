@@ -150,3 +150,71 @@ private emails, or sensitive application notes.
 - **Rebuilt:** `node scripts/build-instructions.mjs --promote` → `AGENTS.md` + `CLAUDE.md` regenerated; `CLAUDE.md` now imports `@SNICKERDOODLE.md`.
 - **Untouched:** `data/` CSVs (real company names containing "mycroft") and prior RUN_LOG history (append-only).
 - **Result:** conformance + doctor green; no stale `MYCROFT.md` outside data/history.
+
+- # Run Log
+
+## 2026-06-25 — Setup Exercise: Search's Personal Layer
+
+**What was built:**
+- `search/resume.json` — structured, attested resume extracted from candidate's
+  current academic CV (8 employment entries, 7 education entries, 8 refereed
+  publications, 7 working papers, 1 grant, 7 awards, computational/language
+  skills, institutional/professional service).
+- `search/profile.yml` — target role, visa/timeline constraints, geography,
+  industry preferences, sponsorship requirement.
+- `search/gaps.md` — 5-row gap table comparing attested resume against target
+  role requirements (SOC 19-3011 / 15-2051 / 15-2041), with one killed row
+  and one rewritten row.
+
+**Three attestation errors caught in resume.json:**
+1. Computational skills (R/Python, STATA/SPSS, MATLAB/SAS, Julia) were extracted
+   as uniformly "expert" from a 5-dot CV rating mark that did not actually
+   distinguish proficiency by tool. Corrected per-tool: R/Python and STATA/SPSS
+   = proficient, MATLAB = expert, SAS and Julia = working knowledge only.
+2. The MathWorks Lab role description used solo-leadership language ("led
+   strategic computational initiatives," "spearheaded integration of AI")
+   that overstated actual team-based/co-led contribution. Reworded to
+   "co-led... as part of a team."
+3. German language proficiency was extracted as "expert" from the same
+   uniform dot-rating system as the computational skills. Corrected to
+   working knowledge.
+
+**Top gap from gaps.md:**
+The FY2027 H-1B cap lottery has already closed for new registrations
+(registration ran March 4–19, 2026; petition filing window closes June 30,
+2026 — five days from today). A new cap-subject H-1B cannot be initiated
+this cycle. This was not in my prior mode-design assignment, which assumed
+a "12 months out" lottery framing that is now out of date. The plan: pivot
+near-term search toward cap-exempt employers (universities, Federal Reserve
+Banks, RAND, Brookings, Urban Institute) who can file H-1B petitions
+year-round without the lottery, to bridge the gap until the FY2028
+registration window (~March 2027).
+
+**Row killed and why:**
+Killed: "Candidate lacks demonstrated industry (non-academic) work
+experience." Reason: this doesn't apply to me — I have a J.P. Morgan Chase
+financial analyst internship and ongoing MathWorks Lab advisory work with
+the MathWorks engineering team, both of which are real industry-facing
+experience. The gap was a generic assumption about PhD-to-industry
+transitions that didn't hold once my actual resume entries were checked.
+
+**Field corrected in profile.yml from the agent's first draft:**
+`sponsorship_requirement.required` and `visa_and_timeline.sponsorship_required_going_forward`.
+The first draft recorded these as `false`, based on an underspecified
+answer about my green card process being in progress. On review, I
+corrected this: I require H-1B sponsorship as a bridge while the green
+card process continues — the green card alone does not remove the
+near-term need for sponsorship. This flipped the gate type from
+"non-issue" back to "hard_gate" and restored the H-1B lottery timeline
+as a real, binding constraint. This was the most consequential
+correction in the file — an uncorrected version would have produced
+Apply recommendations for companies with zero sponsorship history.
+
+**Verification check answers (Step 4):**
+- resume.json: Yes, every entry is traceable and defensible in an interview.
+- profile.yml: Yes, the visa constraint section reflects actual documents,
+  including the corrected sponsorship requirement.
+- gaps.md: Yes, every gap cites something real (USCIS timeline data,
+  immigration-law sources, O*NET occupational patterns, or the candidate's
+  own prior mode-design research) — none invented from training-data
+  assumption.

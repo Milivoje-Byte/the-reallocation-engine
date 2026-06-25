@@ -1,0 +1,95 @@
+# search/profile.yml
+# Target role, constraints, and search preferences.
+# Reviewed and corrected by candidate on 2026-06-25 — see attestation note at bottom.
+
+target_role:
+  one_sentence: >
+    Quantitative economist / data scientist transitioning from PhD academic
+    research into industry roles classified under SOC 19-3011 (Economist),
+    15-2051 (Data Scientist), or 15-2041 (Statistician), targeting tech econ
+    teams, quantitative consulting, think tanks, and financial services /
+    asset management firms, with TDA (persistent homology) as a research
+    differentiator.
+  primary_soc: "19-3011"
+  secondary_soc: ["15-2051", "15-2041"]
+
+visa_and_timeline:
+  current_status: "F-1 STEM OPT Extension"
+  stem_eligibility_confirmed_by_dso: true
+  stem_opt_extension_end_date: "2027-01-15"
+  unemployment_days_used: 45
+  unemployment_days_ceiling: 90
+  unemployment_days_remaining_hard_ceiling: 45
+  buffer_target_days: 80
+  days_remaining_until_buffer_target_breach: 35
+  sponsorship_required_going_forward: true
+  future_path: "Green card process in progress (category unspecified), but H-1B sponsorship is also required as a bridge while that process continues — candidate cannot rely on the green card alone in the near term."
+  gate_note: >
+    CORRECTED 2026-06-25 — this field was wrong in the first draft of this
+    file and the candidate corrected it. The first draft incorrectly recorded
+    sponsorship_required_going_forward as false, based on an
+    underspecified answer about the green card process. The candidate then
+    clarified: the green card is in progress, but H-1B sponsorship is STILL
+    required as a bridge, since EB-category processing timelines typically
+    run years beyond the STEM OPT window. This means:
+      - The H-1B cap/lottery timeline and cap-exempt employer prioritization
+        from the candidate's mode-design file (phd-econ-to-industry.md v2)
+        DO apply as a real gate — the "12 months out: H-1B lottery window"
+        section is directly relevant, not obsolete.
+      - Employer H-1B sponsorship history (h1b_sponsors.csv in the engine)
+        SHOULD be used as a gate: a company with no sponsorship history is
+        skip-regardless, per the standard engine rule and per Q5 of this
+        exercise.
+      - The binding constraints are now BOTH the STEM OPT unemployment-day
+        clock (45 days used / 90-day ceiling / 35 days until the 80-day
+        buffer target is breached) AND the April H-1B lottery filing
+        deadline — whichever forces a decision first.
+    This reversal is the single most consequential correction in this file.
+    A profile that wrongly marked sponsorship as a non-issue would have
+    produced Apply recommendations for companies with no sponsorship
+    history at all — exactly the failure mode Step 2 of the exercise warns
+    against.
+
+geography:
+  preference: "Fully remote / open to relocate anywhere in the US"
+  notes: >
+    No metro restriction. This is broader than the NYC/DC-specific worked
+    examples in the candidate's mode-design file — those were illustrative
+    scenarios, not a statement of actual geographic constraint.
+
+industry_and_company_preferences:
+  target_sectors:
+    - "Tech companies with economist/data-science teams (e.g., Amazon, Uber, Airbnb, Microsoft, Google)"
+    - "Quantitative consulting (e.g., Analysis Group, Cornerstone Research, NERA)"
+    - "Think tanks / policy research (e.g., Brookings, Urban Institute, RAND)"
+    - "Financial services and asset management, especially quant risk and portfolio groups (e.g., AQR, Two Sigma, bank risk-model groups)"
+  company_size_preference: "Larger, more stable, established employers (public companies, large established institutions) preferred over early-stage startups"
+  hard_exclusions: []
+  exclusion_note: "No hard exclusions stated."
+
+sponsorship_requirement:
+  required: true
+  gate_type: "hard_gate"
+  explanation: >
+    Candidate requires employer-sponsored H-1B as a bridge while a separate
+    green card process continues in parallel. Sponsorship history MUST be
+    used as a skip-regardless gate: a company with no H-1B sponsorship
+    history is skip-regardless, per the standard engine rule and per Q5 of
+    this exercise, regardless of how well the role otherwise fits.
+
+attestation:
+  reviewed: true
+  reviewed_date: "2026-06-25"
+  correction_note: >
+    The field corrected from the agent's first draft was sponsorship_required_going_forward.
+    The first pass at this file recorded it as false, based on an
+    underspecified answer about the candidate's green card process. On
+    review, the candidate corrected this: H-1B sponsorship IS required as a
+    bridge while the green card process continues in parallel — the green
+    card alone does not remove the near-term need for sponsorship. This
+    flips sponsorship_requirement.gate_type from "non-issue" back to
+    "hard_gate" and restores the H-1B lottery timeline from the candidate's
+    mode-design file as a real, binding constraint rather than an obsolete
+    one. This was the single most consequential correction in this file —
+    an uncorrected version would have produced Apply recommendations for
+    companies with zero sponsorship history.
